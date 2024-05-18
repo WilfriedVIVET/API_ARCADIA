@@ -125,9 +125,18 @@ function getInfoAnimal(){
         $pdo = getConnect();
 
         if($pdo){
-            $req = "SELECT a.prenom, a.etat, a.image_path, r.label FROM animal a
+            /*
+            $req ="SELECT a.animal_id, a.prenom, a.etat, r.label, ra.rapport_id, ra.detail_etat, ra.nourriture, ra.grammage, ra.date_rapport FROM animal a
+            INNER JOIN animal_race ar on a.animal_id = ar.animal_id
+            INNER JOIN race r on ar.race_id= r.race_id
+            INNER JOIN animal_rapport art on a.animal_id = ar.animal_id
+            INNER JOIN rapport ra on art.rapport_id = ra.rapport_id
+            ORDER BY a.prenom ASC";
+            */
+            $req = "SELECT a.prenom, a.etat as etat_animal, a.image_path, r.label FROM animal a
             LEFT JOIN animal_race ar ON a.animal_id = ar.animal_id
-            LEFT JOIN race r ON ar.race_id = r.race_id";
+            LEFT JOIN race r ON ar.race_id = r.race_id
+            ORDER BY a.prenom ASC";
             $stmt = $pdo->prepare($req);
             $stmt->execute();
             $infoAnimal = $stmt->fetchAll(PDO::FETCH_ASSOC);

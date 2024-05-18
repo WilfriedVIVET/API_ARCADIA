@@ -26,6 +26,8 @@ try{
             case "horaire";
                 getHoraire();
                 break;
+            
+           
             default:
                 throw new Exception("Cette page n'existe pas");    
          }

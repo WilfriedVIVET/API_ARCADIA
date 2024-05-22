@@ -3,7 +3,7 @@
 require_once("./getConnect.php");
 
 // Fonction qui crée un compte utilisateur.
-function postAccount($role, $email, $prenom, $nom, $password) {
+function postAccount($role_id, $email, $prenom, $nom, $password) {
 
     try {
         $pdo = getConnect();
@@ -19,7 +19,7 @@ function postAccount($role, $email, $prenom, $nom, $password) {
                 echo json_encode(['message' => "Ce compte existe déjà"]);
             } else {
                 // Insertion des données utilisateur
-                $req = "INSERT INTO utilisateur (username, password, nom, prenom) VALUES (:email, :password, :nom, :prenom)";
+                $req = "INSERT INTO utilisateur (username, password, nom, prenom,role_id) VALUES (:email, :password, :nom, :prenom,:role_id)";
                 $stmt = $pdo->prepare($req);
                 $stmt->bindParam(':email', $email, PDO::PARAM_STR);
                 // Hashage du mot de passe
@@ -27,13 +27,9 @@ function postAccount($role, $email, $prenom, $nom, $password) {
                 $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
                 $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
                 $stmt->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+                $stmt->bindParam(':role_id', $role_id, PDO::PARAM_INT);
                 $stmt->execute();
 
-                // Insertion du rôle de l'utilisateur
-                $stmt = $pdo->prepare("INSERT INTO utilisateur_role (username, role_id) VALUES (:email,:roleId)");
-                $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-                $stmt->bindParam(":roleId", $role, PDO::PARAM_STR);
-                $stmt->execute();
                 echo json_encode(["message" => "Compte créé avec succès"]);
             }
         }
@@ -51,15 +47,15 @@ function postAccount($role, $email, $prenom, $nom, $password) {
 $data = json_decode(file_get_contents("php://input"), true);
 
 // Vérification si les données nécessaires sont présentes
-if (isset($data['role'], $data['email'], $data['prenom'], $data['nom'], $data['password'])) {
+if (isset($data['role_id'], $data['email'], $data['prenom'], $data['nom'], $data['password'])) {
 
-    $role = $data['role'];
+    $role_id = $data['role_id'];
     $email = $data['email'];
     $prenom = $data['prenom'];
     $nom = $data['nom'];
     $password = $data['password'];
 
-    postAccount($role, $email, $prenom, $nom, $password);
+    postAccount($role_id, $email, $prenom, $nom, $password);
 
 } else {
     // Gestion du cas où des données requises sont manquantes

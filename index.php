@@ -17,17 +17,30 @@ try{
             case"animaux":
                 getAnimaux();
                 break;  
-            case "habitatComplet";
-            getHabitatComplet();
-            break;    
-            case "infoAnimal";
+            case"races";
+                getRaces();
+                break;
+            case"habitatComplet";
+                getHabitatComplet();
+                break;    
+            case"infoAnimal";
                 getInfoAnimal();
             break;
-            case "horaire";
+            case"horaire";
                 getHoraire();
                 break;
-            
-           
+            case "utilisateur";
+                getUtilisateur();
+                 break;
+            case "avis";
+                getAvis();
+                break;    
+            case "avisIsValid";
+                getAvisIsValid();
+                break;    
+                case "rapport";
+                getRapport();
+                break;          
             default:
                 throw new Exception("Cette page n'existe pas");    
          }

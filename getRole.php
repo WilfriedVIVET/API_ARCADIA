@@ -21,8 +21,7 @@ function getRole($username, $password) {
                 if (password_verify($password, $hash)) {
                     // Récupération du rôle
                     $req = "SELECT label FROM role r
-                            INNER JOIN utilisateur_role ur ON r.role_id = ur.role_id
-                            INNER JOIN utilisateur u ON ur.username = u.username
+                            INNER JOIN utilisateur u ON r.role_id = u.role_id
                             WHERE u.username = :username";
                     $stmt = $pdo->prepare($req);
                     $stmt->bindParam(':username', $username, PDO::PARAM_STR);

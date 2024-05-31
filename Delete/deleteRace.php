@@ -1,26 +1,26 @@
 <?php
 
-require_once("./getConnect.php");
+require_once("../getConnect.php");
 
 // Fonction qui ajoute un animal.
-function postRace($label) {
+function deleteRace($idRace) {
 
     try {
         $pdo = getConnect();
         if ($pdo) {
             
                 //Insertion de l'image animal
-                $req="INSERT INTO race (label)VALUES(:label)";
+                $req="DELETE FROM race WHERE race_id = :idRace";
                 $stmt=$pdo->prepare($req);
-                $stmt->bindParam(':label', $label, PDO::PARAM_STR);  
+                $stmt->bindParam(':idRace', $idRace, PDO::PARAM_INT);  
                 $stmt->execute();
 
                
-                echo json_encode(["message" => "Race ajouté avec succès"]);
+                echo json_encode(["message" => "Race supprimer avec succès"]);
             }
    } catch (Exception $e) {
         // Gestion des erreurs
-        echo json_encode(["message" => "Problème lors de l'ajout de la race" . $e->getMessage()]);
+        echo json_encode(["message" => "Problème lors de la suppression de la race" . $e->getMessage()]);
     } finally {
         // Fermeture de la connexion PDO
         if ($pdo) {
@@ -33,10 +33,12 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 // Vérification si les données nécessaires sont présentes
 
-if (isset($data['label'])) {
-    $label = $data['label'];
+if (isset($data['idRace'])) {
+
+    $idRace = $data['idRace'];
    
-    postRace($label);
+    
+    deleteRace($idRace);
 
 } else {
     // Gestion du cas où des données requises sont manquantes

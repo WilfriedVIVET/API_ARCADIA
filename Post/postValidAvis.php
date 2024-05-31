@@ -1,6 +1,6 @@
 <?php
 
-require_once("./getConnect.php");
+require_once("../getConnect.php");
 
 // Fonction qui valide des avis.
 function postValidAvis($newAvis) {

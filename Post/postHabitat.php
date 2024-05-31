@@ -1,6 +1,6 @@
 <?php
 
-require_once("./getConnect.php");
+require_once("../getConnect.php");
 
 // Fonction qui modifie ou ajoute un habitat.
 function postHabitat($habitat_id, $nom, $description, $image_data) {

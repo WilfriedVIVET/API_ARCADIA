@@ -1,6 +1,6 @@
 <?php
 
-require_once("./getConnect.php");
+require_once("../getConnect.php");
 
 // Fonction qui modifie l'état d'un habitat.
 function postEtat($habitat, $etat) {

@@ -1,6 +1,6 @@
 <?php
 
-require_once("./getConnect.php");
+require_once("../getConnect.php");
 
 // Fonction qui supprime un habitat.
 function deleteHabitat($habitat_id) {

@@ -1,26 +1,26 @@
 <?php
 
-require_once("./getConnect.php");
+require_once("../getConnect.php");
 
-//Fonction qui supprime un service.
-function createService($nom, $description) {
+//Fonction qui supprime un animal.
+function deleteAnimal($index) {
     
     try {
         $pdo = getConnect();
         if ($pdo) {
-            $req = "INSERT INTO `services`(nom, description) VALUES (:nom , :description)";
+            $req = "DELETE FROM animal where animal_id = :index";
             $stmt = $pdo->prepare($req);
-            $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
-            $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+            $stmt->bindParam(':index', $index, PDO::PARAM_INT);
             $stmt->execute();           
             $stmt->closeCursor();
-            echo json_encode(["message"=>"Service ajouté avec succès"]);
+            echo json_encode(["message"=>"Animal supprimé avec succès"]);
         }            
+        
                     
       
     } catch (Exception $e) {
         // Message d'erreur
-       echo json_encode(["message"=>"problème lors de l'ajout du service"]);
+       echo json_encode(["message"=>"problème lors de la suppression de l'animal" + $e]);
     } finally {
         // Fermeture de la connexion PDO.
         if ($pdo) {
@@ -32,13 +32,11 @@ function createService($nom, $description) {
 $data = json_decode(file_get_contents("php://input"), true);
 
 // Vérification si les données nécessaires sont présentes
-if (isset($data['index'],$data['nom'],$data['description'])) {
+if (isset($data['animal_id'])) {
     
-    $index=$data['index'];
-    $nom=$data['nom'];
-    $description=$data['description'];
+    $index=$data['animal_id'];
 
-    createService($nom,$description);
+    deleteAnimal($index);
     
 } else {
     // Géstion du cas où des données requises sont manquantes

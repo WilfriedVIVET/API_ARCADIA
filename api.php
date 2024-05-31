@@ -86,7 +86,7 @@ function getHabitatComplet() {
         $pdo = getConnect();
         if ($pdo) {
         
-            $req = "SELECT 
+            $req = " SELECT 
             h.habitat_id,
             h.nom, 
             h.description, 
@@ -191,8 +191,6 @@ function getInfoAnimal(){
             a.etat, 
             r.label, 
             ra.detail_etat, 
-            ra.nourriture, 
-            ra.grammage, 
             ra.date_rapport, 
             ra.nrtconseille,
             ra.qtconseille
@@ -206,7 +204,7 @@ function getInfoAnimal(){
                     animal_id, 
                     MAX(rapport_id) AS max_rapport_id
                 FROM 
-                    rapport
+                    rapport ra
                 GROUP BY 
                     animal_id
             ) max_rapport ON a.animal_id = max_rapport.animal_id

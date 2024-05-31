@@ -1,6 +1,6 @@
 <?php
 
-require_once("./getConnect.php");
+require_once("../getConnect.php");
 
 // Fonction qui ajoute un animal.
 function postAnimal($prenom, $race, $habitat,$image_data) {

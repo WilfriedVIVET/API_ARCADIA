@@ -53,8 +53,8 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 // Vérification si les données nécessaires sont présentes
 if (isset($data['email'], $data['password'])) {
-    $username = $data['email'];
-    $password = $data['password'];
+    $username = htmlspecialchars( $data['email'],ENT_QUOTES,'UTF-8');
+    $password = htmlspecialchars( $data['password'], ENT_QUOTES,'UTF-8');
     getRole($username, $password);
 } else {
     // Gestion du cas où des données requises sont manquantes

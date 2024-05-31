@@ -1,6 +1,6 @@
 <?php
 
-require_once("./getConnect.php");
+require_once("../getConnect.php");
 
 //Fonction qui modifie un service.
 function updateService($index, $nom,$description) {

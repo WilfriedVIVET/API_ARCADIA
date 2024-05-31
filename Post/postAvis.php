@@ -1,6 +1,6 @@
 <?php
 
-require_once("./getConnect.php");
+require_once("../getConnect.php");
 
 // Fonction qui récupere les avis utilisateur..
 function postAvis($pseudo, $commentaire, $isValid) {
@@ -17,11 +17,11 @@ function postAvis($pseudo, $commentaire, $isValid) {
                 $stmt->bindParam(':isValid', $isValid, PDO::PARAM_BOOL);         
                 $stmt->execute();
  
-                echo json_encode(["message" => "Avis envoyé avec succès"]);
+                echo json_encode(["message" => "Avis envoyé avec succès !"]);
             }
    } catch (Exception $e) {
         // Gestion des erreurs
-        echo json_encode(["message" => "Problème lors de l'ajout de l'avis" . $e->getMessage()]);
+        echo json_encode(["message" => "Problème lors de l'ajout de l'avis !" . $e->getMessage()]);
     } finally {
         // Fermeture de la connexion PDO
         if ($pdo) {
@@ -36,8 +36,8 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 if (isset($data['pseudo'], $data['commentaire'], $data['isValid'])) {
 
-    $pseudo = $data['pseudo'];
-    $commentaire = $data['commentaire'];
+    $pseudo = htmlspecialchars($data['pseudo'], ENT_QUOTES, 'UTF-8');
+    $commentaire = htmlspecialchars($data['commentaire'], ENT_QUOTES, 'UTF-8');
     $isValid = $data['isValid'];
     
     postAvis($pseudo,$commentaire,$isValid);

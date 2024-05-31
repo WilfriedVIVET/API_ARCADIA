@@ -1,6 +1,6 @@
 <?php
 
-require_once("./getConnect.php");
+require_once("../getConnect.php");
 
 // Fonction qui crée un compte utilisateur.
 function postAccount($role_id, $email, $prenom, $nom, $password) {

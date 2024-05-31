@@ -1,6 +1,6 @@
 <?php
 
-require_once("./getConnect.php");
+require_once("../getConnect.php");
 
 // Fonction qui crée un rapport sur l'animal
 function postInfoRapport($animal_id, $date, $detail, $etat, $grammage, $nourriture, $nrtconseille, $qtconseille) {

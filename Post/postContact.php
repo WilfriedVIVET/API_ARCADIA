@@ -1,6 +1,6 @@
 <?php
 
-require_once("./getConnect.php");
+require_once("../getConnect.php");
 
 // Fonction qui modifie l'état d'un habitat.
 function postContact($titre, $description, $email) {
@@ -36,9 +36,9 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 if (isset($data['titre'], $data['description'], $data['email'])) {
 
-    $titre = $data['titre'];
-    $description = $data['description'];
-    $email = $data['email'];
+    $titre = htmlspecialchars($data['titre'],ENT_QUOTES,'UTF-8');
+    $description = htmlspecialchars($data['description'],ENT_QUOTES,'UTF-8');
+    $email = htmlspecialchars($data['email'],ENT_QUOTES,'UTF-8');
     
     postContact($titre,$description,$email);
 

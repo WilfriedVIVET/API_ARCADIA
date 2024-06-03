@@ -1,7 +1,7 @@
 <?php
 require_once("./getConnect.php");
 
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: https://arcadia-vivet-729d06aa27ef.herokuapp.com/");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: GET, POST");

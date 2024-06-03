@@ -1,7 +1,8 @@
 {
-  "name": "vivet/API_ARCADIA",
+  "name": "vivet/api-arcadia",
   "description": "API pour le site ARCADIA",
   "require": {
     "php": ">=8.3"
-  }
+  },
+  "license": "wilfried vivet"
 }

@@ -1,7 +1,7 @@
 <?php
-header("Access-Control-Allow-Origin: https://arcadia-vivet-729d06aa27ef.herokuapp.com");
+header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 

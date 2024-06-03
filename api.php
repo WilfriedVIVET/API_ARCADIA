@@ -1,6 +1,12 @@
 <?php
 require_once("./getConnect.php");
 
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: GET, POST");
+header("Access-Control-Allow-Credentials: true");
+
 // Fonction pour envoyer des données au format JSON.
 function sendJson($data){
     header('Content-Type: application/json');

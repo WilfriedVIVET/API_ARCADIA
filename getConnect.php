@@ -1,5 +1,9 @@
 <?php
-
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Credentials: true");
 function loadEnv($path)
 {
     if (!file_exists($path)) {
@@ -30,11 +34,7 @@ $envFile = $isLocalhost ? '.env.developpement' : '.env.production';
 loadEnv(__DIR__ . '/'. $envFile);
 
 
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json");
-header("Access-Control-Allow-Headers: *");
-header("Access-Control-Allow-Methods: GET, POST");
-header("Access-Control-Allow-Credentials: true");
+
 
 
 // Fonction de connexion à la base de données

@@ -1,0 +1,7 @@
+{
+  "name": "vivet/API_ARCADIA",
+  "description": "API pour le site ARCADIA",
+  "require": {
+    "php": ">=8.3"
+  }
+}

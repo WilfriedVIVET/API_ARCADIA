@@ -42,12 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 // Fonction de connexion à la base de données
 function getConnect(){
-    $dsn = "mysql:host=" . $_ENV['DB_HOST'] . ";dbname=" . $_ENV['DB_NAME'] . ";port=" . $_ENV['DB_PORT'];
-    $username = $_ENV['DB_USER'];
-    $password = $_ENV['DB_PASS'];
-
+    $dsn = $_ENV['DB_DSN'];
+    sendJson($dsn);
     try {
-        $pdo = new PDO($dsn, $username, $password);
+        $pdo = new PDO($dsn);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $pdo;
     } catch (PDOException $e) {

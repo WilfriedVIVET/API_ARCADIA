@@ -1,9 +1,8 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
-header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: *");
+
 
 if(getenv('JAWSDB_URL') !== false){
     $dbparts = parse_url(getenv('JAWSDB_URL'));
@@ -32,5 +31,3 @@ function getConnect($hostname,$username,$password,$database){
         throw new Exception("Erreur de connexion à la base de données: " . $e->getMessage());
     } 
 }
-
-

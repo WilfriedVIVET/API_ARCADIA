@@ -134,7 +134,7 @@ function getAnimaux() {
     try {
         $pdo = getConnect();
         if ($pdo) {
-            $req = "SELECT a.animal_id,a.image_path,a.prenom,a.etat, h.nom,r.label FROM animal a 
+            $req = "SELECT a.animal_id,a.prenom,a.etat,a.image_path, h.nom,r.label FROM animal a 
             INNER JOIN race r ON a.race_id= r.race_id
             INNER JOIN habitats h ON  a.habitat_id = h.habitat_id";
             

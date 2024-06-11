@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Headers: *");
-header("Access-Control-Allow-Methods: GET, POST, DELETE, UPDATE");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, UPDATE,INSERT");
 header("Access-Control-Allow-Credentials: true");
 
 

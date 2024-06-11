@@ -10,7 +10,7 @@ header("Access-Control-Allow-Credentials: true");
 // Fonction de connexion à la base de données
 function getConnect(){
 
-    /*
+    
     if(getenv('JAWSDB_URL') !== false){
         $dbparts = parse_url(getenv('JAWSDB_URL'));
         //En ligne
@@ -27,13 +27,7 @@ function getConnect(){
         $hostname= 'localhost';
         $dsn = "mysql:host=$hostname;dbname=$database;port=3306";
     }
-    */
-
-    $username = 'root';
-    $password = 'root';
-    $database = 'arcadia';
-    $hostname= 'localhost';
-    $dsn = "mysql:host=$hostname;dbname=$database;port=3306";
+    
 
     try {
         $pdo = new PDO($dsn,$username,$password);

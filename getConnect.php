@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Headers: *");
-header("Access-Control-Allow-Methods: GET, POST");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, UPDATE");
 header("Access-Control-Allow-Credentials: true");
 
 
@@ -10,6 +10,7 @@ header("Access-Control-Allow-Credentials: true");
 // Fonction de connexion à la base de données
 function getConnect(){
 
+    /*
     if(getenv('JAWSDB_URL') !== false){
         $dbparts = parse_url(getenv('JAWSDB_URL'));
         //En ligne
@@ -21,12 +22,18 @@ function getConnect(){
     }else{
         //En local
         $username = 'root';
-        $password = '';
+        $password = 'root';
         $database = 'arcadia';
         $hostname= 'localhost';
-        $dsn = "mysql:host=$hostname;dbname=$database;port=3308";
+        $dsn = "mysql:host=$hostname;dbname=$database;port=3306";
     }
-    
+    */
+
+    $username = 'root';
+    $password = 'root';
+    $database = 'arcadia';
+    $hostname= 'localhost';
+    $dsn = "mysql:host=$hostname;dbname=$database;port=3306";
 
     try {
         $pdo = new PDO($dsn,$username,$password);

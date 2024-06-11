@@ -37,7 +37,7 @@ $data = json_decode(file_get_contents("php://input"), true);
 if (isset($data['pseudo'], $data['commentaire'], $data['isValid'])) {
 
     $pseudo = htmlspecialchars($data['pseudo'], ENT_QUOTES, 'UTF-8');
-    $commentaire = htmlspecialchars($data['commentaire'], ENT_QUOTES, 'UTF-8');
+    $commentaire =$data['commentaire'];
     $isValid = $data['isValid'];
     
     postAvis($pseudo,$commentaire,$isValid);

@@ -4,8 +4,7 @@ require_once("./getConnect.php");
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Headers: *");
-
-
+header("Access-Control-Allow-Methods: GET, POST, DELETE, UPDATE");
 
 // Fonction pour envoyer des données au format JSON.
 function sendJson($data){
@@ -106,13 +105,11 @@ function getHabitatComplet() {
             image_habitat ih ON h.image_id = ih.image_id
         GROUP BY 
             h.habitat_id, h.nom, h.description, h.image_id, ih.image_data;";
-                        
-                       
+                                 
             $stmt = $pdo->prepare($req);
             $stmt->execute();
             $habitatComplet = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $stmt->closeCursor();
-
 
             // Convertir les images en Base64
             foreach ($habitatComplet as &$habitatC) {
@@ -137,23 +134,15 @@ function getAnimaux() {
     try {
         $pdo = getConnect();
         if ($pdo) {
-            $req = "SELECT a.animal_id,a.prenom,a.etat, h.nom,ih.image_data,r.label FROM animal a 
+            $req = "SELECT a.animal_id,a.image_path,a.prenom,a.etat, h.nom,r.label FROM animal a 
             INNER JOIN race r ON a.race_id= r.race_id
-            INNER JOIN habitats h ON  a.habitat_id = h.habitat_id
-            INNER JOIN image_animal ih ON a.image_id = ih.image_id";
+            INNER JOIN habitats h ON  a.habitat_id = h.habitat_id";
             
             $stmt = $pdo->prepare($req);
             $stmt->execute();
             $animaux = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $stmt->closeCursor();
-
-            // Convertir les images en Base64
-            foreach ($animaux as &$animal) {
-                if (isset($animal['image_data'])) {
-                 $animal['image_data'] = base64_encode($animal['image_data']);
-                }
-    }
-
+ 
             sendJson($animaux);   
         }
     } catch (Exception $e) {
@@ -304,7 +293,7 @@ function getRapport(){
             $req = "SELECT r.rapport_id,ra.label, a.etat, r.detail_etat, r.date_rapport, r.nrtconseille, r.qtconseille, a.prenom  FROM rapport r
             INNER JOIN animal a on r.animal_id = a.animal_id
             INNER JOIN race ra on a.race_id = ra.race_id
-             WHERE date_rapport !='0000-00-00 00:00:00'";
+            WHERE r.date_rapport IS NOT NULL ";
             $stmt = $pdo->prepare($req);
             $stmt->execute();
             $races = $stmt->fetchAll(PDO::FETCH_ASSOC);

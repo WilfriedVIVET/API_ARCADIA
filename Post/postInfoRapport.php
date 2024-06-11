@@ -3,7 +3,7 @@
 require_once("../getConnect.php");
 
 // Fonction qui crée un rapport sur l'animal
-function postInfoRapport($animal_id, $date, $detail, $etat, $grammage, $nourriture, $nrtconseille, $qtconseille) {
+function postInfoRapport($animal_id, $date, $detail, $etat, $grammage, $nourriture, $nrtconseille, $qtconseille,$prenom) {
     try {
         $pdo = getConnect();
         if ($pdo) {
@@ -15,8 +15,8 @@ function postInfoRapport($animal_id, $date, $detail, $etat, $grammage, $nourritu
             $stmt->execute();
 
             // Insertion du rapport de l'animal.
-            $req = "INSERT INTO rapport (detail_etat, nourriture, grammage, animal_id, nrtconseille, qtconseille, date_rapport)
-                    VALUES (:detail, :nourriture, :grammage, :animal_id, :nrtconseille, :qtconseille, :date_rapport)";
+            $req = "INSERT INTO rapport (detail_etat, nourriture, grammage, animal_id, nrtconseille, qtconseille, date_rapport,prenom)
+                    VALUES (:detail, :nourriture, :grammage, :animal_id, :nrtconseille, :qtconseille, :date_rapport, :prenom)";
             $stmt = $pdo->prepare($req);
             $stmt->bindParam(":detail", $detail, PDO::PARAM_STR);
             $stmt->bindParam(":nourriture", $nourriture, PDO::PARAM_STR);
@@ -25,6 +25,7 @@ function postInfoRapport($animal_id, $date, $detail, $etat, $grammage, $nourritu
             $stmt->bindParam(":nrtconseille", $nrtconseille, PDO::PARAM_STR);
             $stmt->bindParam(":qtconseille", $qtconseille, PDO::PARAM_STR);
             $stmt->bindParam(":date_rapport", $date, PDO::PARAM_STR);
+            $stmt->bindParam(":prenom", $prenom, PDO::PARAM_STR);
             $stmt->execute();
 
             echo json_encode(["message" => "Rapport créé avec succès"]);
@@ -43,7 +44,7 @@ function postInfoRapport($animal_id, $date, $detail, $etat, $grammage, $nourritu
 $data = json_decode(file_get_contents("php://input"), true);
 
 // Vérification si les données nécessaires sont présentes
-if (isset($data['animal_id'], $data['date'], $data['detail'], $data['etat'], $data['grammage'], $data['nourriture'], $data['nrtconseille'], $data['qtconseille'])) {
+if (isset($data['animal_id'], $data['date'], $data['detail'], $data['etat'], $data['grammage'], $data['nourriture'], $data['nrtconseille'], $data['qtconseille'],$data['prenom'])) {
     $animal_id = $data['animal_id'];
     $date = $data['date'];
     $detail = $data['detail'];
@@ -52,8 +53,9 @@ if (isset($data['animal_id'], $data['date'], $data['detail'], $data['etat'], $da
     $nourriture = $data['nourriture'];
     $nrtconseille = $data['nrtconseille'];
     $qtconseille = $data['qtconseille'];
+    $prenom = $data['prenom'];
 
-    postInfoRapport($animal_id, $date, $detail, $etat, $grammage, $nourriture, $nrtconseille, $qtconseille);
+    postInfoRapport($animal_id, $date, $detail, $etat, $grammage, $nourriture, $nrtconseille, $qtconseille,$prenom);
 } else {
     // Gestion du cas où des données requises sont manquantes
     echo json_encode(["message" => "Paramètres manquants"]);

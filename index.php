@@ -11,7 +11,7 @@ try{
             case"services":
                 getServices();
                 break;
-            case"habitats":
+            case"habitat":
                 getHabitats();
                 break;
             case"animaux":

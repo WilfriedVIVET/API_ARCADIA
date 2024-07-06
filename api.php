@@ -61,20 +61,11 @@ function getHabitats() {
     try {
         $pdo = getConnect();
         if ($pdo) {
-            $req = "SELECT h.habitat_id, h.nom, h.description, h.commentaire, ih.image_data FROM habitats h
-                    LEFT JOIN image_habitat ih ON h.image_id = ih.image_id";
+            $req = "SELECT * FROM habitats ";
             $stmt = $pdo->prepare($req);
             $stmt->execute();
             $habitats = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $stmt->closeCursor();
-
-            // Convertir les images en Base64
-            foreach ($habitats as &$habitat) {
-                if (isset($habitat['image_data'])) {
-                    $habitat['image_data'] = base64_encode($habitat['image_data']);
-                }
-            }
-
             sendJson($habitats);   
         }
     } catch (Exception $e) {
@@ -90,34 +81,24 @@ function getHabitatComplet() {
     try {
         $pdo = getConnect();
         if ($pdo) {
-        
             $req = " SELECT 
             h.habitat_id,
             h.nom, 
-            h.description, 
-            ih.image_data,
+            h.descriptionHabitat, 
+            h.image_path,
             GROUP_CONCAT(DISTINCT animal.prenom ORDER BY animal.prenom SEPARATOR ', ') AS liste_animaux
         FROM 
             habitats h
         LEFT JOIN 
             animal ON h.habitat_id = animal.habitat_id 
-        LEFT JOIN
-            image_habitat ih ON h.image_id = ih.image_id
         GROUP BY 
-            h.habitat_id, h.nom, h.description, h.image_id, ih.image_data;";
-                                 
+            h.habitat_id, h.nom, h.descriptionHabitat";                  
             $stmt = $pdo->prepare($req);
             $stmt->execute();
             $habitatComplet = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $stmt->closeCursor();
 
-            // Convertir les images en Base64
-            foreach ($habitatComplet as &$habitatC) {
-            if (isset($habitatC['image_data'])) {
-             $habitatC['image_data'] = base64_encode($habitatC['image_data']);
-            }
-}
-
+       
             sendJson($habitatComplet);   
         }
     } catch (Exception $e) {
@@ -137,7 +118,6 @@ function getAnimaux() {
             $req = "SELECT a.animal_id,a.prenom,a.etat,a.image_path, h.nom,r.label FROM animal a 
             INNER JOIN race r ON a.race_id= r.race_id
             INNER JOIN habitats h ON  a.habitat_id = h.habitat_id";
-            
             $stmt = $pdo->prepare($req);
             $stmt->execute();
             $animaux = $stmt->fetchAll(PDO::FETCH_ASSOC);

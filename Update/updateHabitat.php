@@ -2,37 +2,27 @@
 
 require_once("../getConnect.php");
 
-// Fonction qui ajoute un habitat.
-function postHabitat( $nom, $descriptionHabitat, $image_path) {
+// Fonction qui modifie un habitat.
+function updateHabitat($habitat_id, $nom, $descriptionHabitat, $image_path) {
     try {
         $pdo = getConnect();
         if ($pdo) {
 
-            //Vérification si l'habitat existe.
-            $reqcheckHabitat = "SELECT COUNT(*) FROM habitats WHERE nom = :nom ";
-            $stmtcheckHabitat = $pdo->prepare($reqcheckHabitat);
-            $stmtcheckHabitat->bindParam(':nom', $nom, PDO::PARAM_STR);
-            $stmtcheckHabitat->execute();
-            $habitatExist = (bool)$stmtcheckHabitat->fetchColumn();
-
-            if (!$habitatExist) {
-                //Création d'un nouvel habitat.
-                $req = "INSERT INTO habitats (nom,descriptionHabitat,image_path)VALUES(:nom, :descriptionHabitat,:image_path)";
+                // Insertion des modification de l' habitat.
+                $req = "UPDATE habitats SET nom = :nom, descriptionHabitat = :descriptionHabitat, image_path = :image_path WHERE habitat_id = :habitat_id";
                 $stmt = $pdo->prepare($req);
                 $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
                 $stmt->bindParam(':descriptionHabitat', $descriptionHabitat, PDO::PARAM_STR);
                 $stmt->bindParam(':image_path', $image_path, PDO::PARAM_STR);
+                $stmt->bindParam(':habitat_id', $habitat_id, PDO::PARAM_INT);
                 $stmt->execute();
-                echo json_encode(["message" => "Habitat créé avec succès"]);
-               
-            } else {
-                echo json_encode(["message" => "Habitat déjà existant !"]);
-            }
+                echo json_encode(["message" => "Habitat modifié avec succès"]);     
+            
     }
         
     } catch (Exception $e) {
         // Gestion des erreurs
-        echo json_encode(["message" => "Problème lors de l'ajout du nouvel habitat: " . $e->getMessage()]);
+        echo json_encode(["message" => "Problème lors de la modification de l'habitat: " . $e->getMessage()]);
     } finally {
         // Fermeture de la connexion PDO
         if ($pdo) {
@@ -44,7 +34,8 @@ function postHabitat( $nom, $descriptionHabitat, $image_path) {
 $data = json_decode(file_get_contents("php://input"), true);
 
 // Vérification si les données nécessaires sont présentes
-if (isset( $data['nom'], $data['descriptionHabitat'], $data['image_data'])) {
+if (isset($data['habitat_id'], $data['nom'], $data['descriptionHabitat'], $data['image_data'])) {
+    $habitat_id = $data['habitat_id'];
     $nom = $data['nom'];
     $descriptionHabitat = $data['descriptionHabitat'];
     $image_data = $data['image_data'];
@@ -67,7 +58,7 @@ if (isset( $data['nom'], $data['descriptionHabitat'], $data['image_data'])) {
 
             // Enregistrer l'image dans le dossier
             if (file_put_contents($absolute_path, $image_data)) { 
-                postHabitat( $nom, $descriptionHabitat, $relative_path);
+                updateHabitat($habitat_id, $nom, $descriptionHabitat, $relative_path);
             } else {
                 echo json_encode(["message" => "Échec de l'enregistrement de l'image"]);
             }

@@ -9,13 +9,12 @@ function postRace($label) {
         $pdo = getConnect();
         if ($pdo) {
             
-                //Insertion de l'image animal
+                //Insertion de la race.
                 $req="INSERT INTO race (label)VALUES(:label)";
                 $stmt=$pdo->prepare($req);
                 $stmt->bindParam(':label', $label, PDO::PARAM_STR);  
                 $stmt->execute();
 
-               
                 echo json_encode(["message" => "Race ajouté avec succès"]);
             }
    } catch (Exception $e) {

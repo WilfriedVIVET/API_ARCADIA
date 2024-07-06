@@ -6,11 +6,9 @@ header("Access-Control-Allow-Methods: GET, POST, DELETE, UPDATE,INSERT");
 header("Access-Control-Allow-Credentials: true");
 
 
-
 // Fonction de connexion à la base de données
 function getConnect(){
 
-    
     if(getenv('JAWSDB_URL') !== false){
         $dbparts = parse_url(getenv('JAWSDB_URL'));
         //En ligne
